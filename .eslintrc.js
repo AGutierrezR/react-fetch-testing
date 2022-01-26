@@ -24,8 +24,12 @@ module.exports = {
     quotes: ['warn', 'single'],
     semi: ['warn', 'never'],
     'no-console': ['warn'],
-    'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'no-duplicate-imports': ['warn', { includeExports: true }],
     'no-empty': ['warn', { allowEmptyCatch: true }],
+
+    // TypeScript
+    '@typescript-eslint/ban-ts-comment': 'off',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
   },
 }
