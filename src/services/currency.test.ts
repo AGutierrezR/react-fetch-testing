@@ -1,14 +1,13 @@
-import { convert, Rate } from './currency'
+import { convert } from './currency'
+import fetch from 'jest-fetch-mock'
 
 describe('Convert request', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    fetch.resetMocks()
   })
 
   it('Should return USD rate', async () => {
-    jest
-      .spyOn(global, 'fetch')
-      .mockResolvedValue(mockRateResponse({ USD: 1.42 }))
+    fetch.mockResponse(JSON.stringify({ rates: { USD: 1.42 } }))
 
     const rate = await convert('EUR', 'USD')
     expect(rate).toBe(1.42)
@@ -16,17 +15,11 @@ describe('Convert request', () => {
   })
 
   it('Handles exceptions with null', async () => {
-    jest.spyOn(global, 'fetch').mockRejectedValue(new Error('API Failure'))
+    // fetch.mockReject(new Error('Api Failure'))
+    fetch.mockReject()
 
     const rate = await convert('EUR', 'USD')
     expect(rate).toBe(null)
     expect(fetch).toBeCalledTimes(1)
   })
 })
-
-// Utils
-function mockRateResponse(rates: Rate) {
-  return {
-    json: () => Promise.resolve({ rates }),
-  } as Response
-}
