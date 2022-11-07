@@ -2,7 +2,7 @@ import { convert } from './currency'
 import fetch from 'jest-fetch-mock'
 
 describe('Convert request', () => {
-  beforeEach(() => {
+  afterEach(() => {
     fetch.resetMocks()
   })
 
